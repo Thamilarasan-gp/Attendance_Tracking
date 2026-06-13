@@ -4,11 +4,11 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   StyleSheet,
   Text,
   TextInput,
-  View
+  View,
+  Pressable,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import api, { getErrorMessage } from "../services/api";
@@ -31,7 +31,7 @@ export default function RegisterScreen({ navigation, onAuth }) {
       const response = await api.post("/api/auth/register", {
         name: name.trim(),
         email: email.trim(),
-        password
+        password,
       });
       await onAuth(response.data.data);
     } catch (error) {
@@ -46,14 +46,27 @@ export default function RegisterScreen({ navigation, onAuth }) {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      <Pressable style={styles.back} onPress={() => navigation.goBack()}>
-        <Ionicons name="chevron-back" size={24} color={COLORS.white} />
-      </Pressable>
+      {/* Background Decorative Shapes from image_ec2383.png */}
+      <View style={styles.shapeOne} />
+      <View style={styles.shapeTwo} />
 
-      <View style={styles.card}>
+      {/* Top Blue Header Block */}
+      <View style={styles.headerSection}>
+        <Pressable style={styles.back} onPress={() => navigation.goBack()}>
+          <Ionicons name="chevron-back" size={24} color={COLORS.white} />
+        </Pressable>
+
+        <View style={styles.logoBox}>
+          <Ionicons name="clipboard" size={34} color={COLORS.blue || "#0D4DB8"} />
+        </View>
+      </View>
+
+      {/* Bottom White Card (Covers Full Bottom) */}
+      <View style={styles.formCard}>
         <Text style={styles.title}>Create Account</Text>
         <Text style={styles.subtitle}>Start managing placement attendance</Text>
 
+        <Text style={styles.label}>Name</Text>
         <View style={styles.inputWrap}>
           <Ionicons name="person-outline" size={18} color={COLORS.muted} />
           <TextInput
@@ -65,6 +78,7 @@ export default function RegisterScreen({ navigation, onAuth }) {
           />
         </View>
 
+        <Text style={styles.label}>Email</Text>
         <View style={styles.inputWrap}>
           <Ionicons name="mail-outline" size={18} color={COLORS.muted} />
           <TextInput
@@ -78,6 +92,7 @@ export default function RegisterScreen({ navigation, onAuth }) {
           />
         </View>
 
+        <Text style={styles.label}>Password</Text>
         <View style={styles.inputWrap}>
           <Ionicons name="lock-closed-outline" size={18} color={COLORS.muted} />
           <TextInput
@@ -103,8 +118,20 @@ export default function RegisterScreen({ navigation, onAuth }) {
         </Pressable>
 
         <Pressable onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.link}>Already have an account? Login</Text>
+          <Text style={styles.link}>
+            Already have an account?{" "}
+            <Text style={styles.loginHighlight}>Login</Text>
+          </Text>
         </Pressable>
+
+        {/* Custom Footer with Heart Icon matching LoginScreen */}
+        <View style={styles.footerContainer}>
+          <Text style={styles.footerText}>
+            Build and crafted with{" "}
+            <Ionicons name="heart" size={12} color="#EF4444" /> by{" "}
+            <Text style={styles.footerAuthor}>Thamilarasan GP</Text>
+          </Text>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
@@ -113,82 +140,150 @@ export default function RegisterScreen({ navigation, onAuth }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.navyDark,
+    backgroundColor: COLORS.navyDark, 
+    overflow: "hidden",
+  },
+  shapeOne: {
+    position: "absolute",
+    width: 400,
+    height: 400,
+    borderRadius: 200,
+    backgroundColor: "#7EAFFF",
+    opacity: 0.3,
+    right: -150,
+    top: -50,
+  },
+  shapeTwo: {
+    position: "absolute",
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    backgroundColor: "#9CC0FF",
+    opacity: 0.25,
+    left: -100,
+    bottom: -50,
+    zIndex: 1,
+  },
+  headerSection: {
+    flex: 0.28, 
     justifyContent: "center",
-    paddingHorizontal: 20
+    alignItems: "center",
+    position: "relative",
   },
   back: {
     position: "absolute",
-    top: 58,
+    top: Platform.OS === "ios" ? 50 : 30,
     left: 20,
     width: 42,
     height: 42,
     borderRadius: 21,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    zIndex: 10,
   },
-  card: {
+  logoBox: {
+    width: 70,
+    height: 70,
+    borderRadius: 18,
     backgroundColor: COLORS.white,
-    borderRadius: 12,
-    padding: 22,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.2,
-    shadowRadius: 22,
-    elevation: 8
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  formCard: {
+    flex: 0.72, 
+    backgroundColor: COLORS.white,
+    borderTopLeftRadius: 50, 
+    paddingHorizontal: 30,
+    paddingTop: 35,
+    paddingBottom: 20,
+    zIndex: 2,
   },
   title: {
     color: COLORS.text,
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: "900",
-    textAlign: "center"
+    textAlign: "center",
   },
   subtitle: {
-    marginTop: 8,
-    marginBottom: 22,
+    marginTop: 4,
+    marginBottom: 25,
     color: COLORS.muted,
     fontSize: 13,
     fontWeight: "700",
-    textAlign: "center"
+    textAlign: "center",
+  },
+  label: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#666",
+    marginBottom: 6,
+    alignSelf: "flex-start",
   },
   inputWrap: {
-    height: 50,
+    height: 52,
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
     borderColor: COLORS.border,
-    borderRadius: 8,
+    borderRadius: 12,
     paddingHorizontal: 14,
-    marginBottom: 14
+    marginBottom: 16,
+    backgroundColor: COLORS.white,
   },
   input: {
     flex: 1,
     color: COLORS.text,
     fontSize: 14,
-    fontWeight: "700",
-    marginLeft: 10
+    fontWeight: "600",
+    marginLeft: 10,
   },
   button: {
-    height: 52,
-    borderRadius: 8,
+    height: 55,
+    borderRadius: 12,
     backgroundColor: COLORS.blue,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 14
+    marginTop: 10,
   },
   buttonDisabled: {
-    opacity: 0.7
+    opacity: 0.7,
   },
   buttonText: {
     color: COLORS.white,
-    fontSize: 15,
-    fontWeight: "900"
+    fontSize: 16,
+    fontWeight: "900",
   },
   link: {
-    color: COLORS.blue,
+    color: COLORS.muted,
     textAlign: "center",
-    marginTop: 18,
+    marginTop: 22,
     fontSize: 13,
-    fontWeight: "900"
-  }
+    fontWeight: "700",
+  },
+  loginHighlight: {
+    color: COLORS.blue,
+    fontWeight: "900",
+  },
+  footerContainer: {
+    marginTop: "auto", 
+    paddingBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  footerText: {
+    fontSize: 12,
+    color: "#A0A0A0",
+    fontWeight: "500",
+    textAlign: "center",
+  },
+  footerAuthor: {
+    color: "#666",
+    fontWeight: "700",
+  },
 });

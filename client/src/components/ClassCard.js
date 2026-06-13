@@ -10,11 +10,11 @@ const ACCENTS = [
   [COLORS.red, COLORS.redSoft]
 ];
 
-export default function ClassCard({ item, index = 0, onPress }) {
+export default function ClassCard({ item, index = 0, onPress, onLongPress }) {
   const [accent, soft] = ACCENTS[index % ACCENTS.length];
 
   return (
-    <Pressable style={styles.card} onPress={onPress}>
+    <Pressable style={styles.card} onPress={onPress} onLongPress={onLongPress}>
       <View style={[styles.iconWrap, { backgroundColor: soft }]}>
         <Ionicons name="people" size={18} color={accent} />
       </View>

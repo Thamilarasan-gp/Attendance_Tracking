@@ -6,12 +6,13 @@ import {
   Modal,
   Pressable,
   RefreshControl,
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
   View
 } from "react-native";
+// Import SafeAreaView from safe-area-context instead of react-native
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
@@ -203,7 +204,8 @@ export default function StudentListScreen({ navigation, route }) {
   };
 
   return (
-    <SafeAreaView style={styles.safe}>
+    // 'edges' config ensures we protect the notch at the top without breaking layout at the bottom
+    <SafeAreaView style={styles.safe} edges={["top", "left", "right", "bottom"]}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Pressable style={styles.headerIcon} onPress={() => navigation.goBack()}>
