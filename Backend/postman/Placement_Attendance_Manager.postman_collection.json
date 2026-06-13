@@ -1,0 +1,274 @@
+{
+  "info": {
+    "name": "Placement Attendance Manager",
+    "description": "Postman collection for the complete Placement Attendance Manager backend.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "classId",
+      "value": ""
+    },
+    {
+      "key": "studentId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/"
+      }
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Thamilarasan\",\n  \"email\": \"thamil@gmail.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"thamil@gmail.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Classes",
+      "item": [
+        {
+          "name": "Create Class",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"IV IT\",\n  \"userId\": \"{{userId}}\"\n}"
+            },
+            "url": "{{baseUrl}}/api/classes"
+          }
+        },
+        {
+          "name": "Get All Classes",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/{{userId}}"
+          }
+        },
+        {
+          "name": "Get Single Class",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/details/{{classId}}"
+          }
+        },
+        {
+          "name": "Update Class",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dell IT\"\n}"
+            },
+            "url": "{{baseUrl}}/api/classes/{{classId}}"
+          }
+        },
+        {
+          "name": "Delete Class",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/classes/{{classId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Add Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rollNo\": \"23IT001\",\n  \"name\": \"Arun Kumar\",\n  \"phone\": \"9876543210\"\n}"
+            },
+            "url": "{{baseUrl}}/api/classes/{{classId}}/students"
+          }
+        },
+        {
+          "name": "Get Students",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/{{classId}}/students"
+          }
+        },
+        {
+          "name": "Search Students",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/{{classId}}/students/search?q=23IT001"
+          }
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rollNo\": \"23IT001\",\n  \"name\": \"Arun Kumar\",\n  \"phone\": \"9876543210\"\n}"
+            },
+            "url": "{{baseUrl}}/api/students/{{studentId}}"
+          }
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/students/{{studentId}}"
+          }
+        },
+        {
+          "name": "Import Students From Excel",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/api/classes/{{classId}}/import"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        {
+          "name": "Update Attendance",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"present\"\n}"
+            },
+            "url": "{{baseUrl}}/api/students/{{studentId}}/status"
+          }
+        },
+        {
+          "name": "Reset Attendance",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/classes/{{classId}}/reset"
+          }
+        },
+        {
+          "name": "Attendance Summary",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/{{classId}}/summary"
+          }
+        },
+        {
+          "name": "Present Students",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/{{classId}}/present"
+          }
+        },
+        {
+          "name": "OD Students",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/{{classId}}/od"
+          }
+        },
+        {
+          "name": "Absent Students",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/{{classId}}/absent"
+          }
+        },
+        {
+          "name": "WhatsApp Report",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/classes/{{classId}}/report"
+          }
+        }
+      ]
+    }
+  ]
+}
