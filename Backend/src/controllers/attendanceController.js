@@ -70,17 +70,34 @@ const updateAttendance = asyncHandler(async (req, res) => {
     throw error;
   }
 
-  const student = await Student.findByIdAndUpdate(
-    studentId,
-    { status },
-    { new: true, runValidators: true }
-  );
+  const student = await Student.findById(studentId);
 
   if (!student) {
     const error = new Error("Student not found");
     error.statusCode = 404;
     throw error;
   }
+
+  // Check if attendance is frozen
+  if (student.frozen) {
+    const error = new Error("Attendance is frozen for this student. Contact admin to unfreeze.");
+    error.statusCode = 403;
+    throw error;
+  }
+
+  // Add to attendance history
+  if (!student.attendanceHistory) {
+    student.attendanceHistory = [];
+  }
+  
+  student.attendanceHistory.push({
+    date: new Date(),
+    status: status,
+    changedBy: "user"
+  });
+
+  student.status = status;
+  await student.save();
 
   const classId = String(student.classId);
   const io = req.app.get("io");

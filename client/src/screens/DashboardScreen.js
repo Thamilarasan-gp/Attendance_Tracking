@@ -111,11 +111,7 @@ export default function DashboardScreen({ navigation, user, onLogout }) {
     ]);
   };
 const handleProfileClick = () => {
-  Alert.alert(
-    "🚧 Under Development",
-    "Profile feature is currently under progress and will be available soon.",
-    [{ text: "OK" }]
-  );
+  navigation.navigate("AdminLogin");
 };
   return (
     <SafeAreaView

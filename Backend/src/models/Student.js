@@ -26,7 +26,24 @@ const studentSchema = new mongoose.Schema(
       type: String,
       enum: ["absent", "present", "od"],
       default: "absent"
-    }
+    },
+    frozen: {
+      type: Boolean,
+      default: false
+    },
+    attendanceHistory: [
+      {
+        date: {
+          type: Date,
+          default: Date.now
+        },
+        status: {
+          type: String,
+          enum: ["absent", "present", "od"]
+        },
+        changedBy: String
+      }
+    ]
   },
   {
     timestamps: {

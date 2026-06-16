@@ -107,6 +107,12 @@ export default function ProfileScreen({ navigation }) {
             icon="notifications-outline"
             title="Notifications"
           />
+
+          <MenuItem
+            icon="shield-outline"
+            title="Admin Panel"
+            onPress={() => navigation.navigate("AdminLogin")}
+          />
         </View>
 
         {/* App */}

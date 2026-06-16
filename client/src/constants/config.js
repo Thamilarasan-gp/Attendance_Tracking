@@ -1,4 +1,5 @@
-export const API_BASE_URL ="https://attendance-tracking-63j7.onrender.com";
+export const API_BASE_URL ="http://10.147.244.65:5000";
+// "https://attendance-tracking-63j7.onrender.com";
   // "https://attendance-tracking-63j7.onrender.com";
 
 export const COLORS = {

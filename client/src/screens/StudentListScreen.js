@@ -278,14 +278,25 @@ export default function StudentListScreen({ navigation, route }) {
           </Pressable>
           <Pressable
             style={styles.primaryButton}
-            onPress={() =>
+            onPress={() => {
+              // If any student is frozen (admin action), prevent starting attendance
+              const anyFrozen = students.some((s) => s.frozen === true);
+              if (anyFrozen) {
+                Alert.alert(
+                  "Attendance Frozen",
+                  "Attendance has been frozen by an admin. Unfreeze to take attendance.",
+                  [{ text: "OK", style: "cancel" }]
+                );
+                return;
+              }
+
               navigation.navigate("Attendance", {
                 classItem: {
                   ...classItem,
-                  studentCount: students.length
-                }
-              })
-            }
+                  studentCount: students.length,
+                },
+              });
+            }}
           >
             <Text style={styles.primaryText}>Start Attendance</Text>
           </Pressable>

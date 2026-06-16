@@ -8,6 +8,10 @@ import DashboardScreen from "../screens/DashboardScreen";
 import CreateClassScreen from "../screens/CreateClassScreen";
 import StudentListScreen from "../screens/StudentListScreen";
 import AttendanceScreen from "../screens/AttendanceScreen";
+import AdminLoginScreen from "../screens/AdminLoginScreen";
+import AdminDashboardScreen from "../screens/AdminDashboardScreen";
+import UserBreakdownScreen from "../screens/UserBreakdownScreen";
+import UserTrackingScreen from "../screens/UserTrackingScreen";
 import { getUser, removeUser, saveUser } from "../storage/authStorage";
 
 const Stack = createNativeStackNavigator();
@@ -68,6 +72,10 @@ export default function AppNavigator() {
             </Stack.Screen>
             <Stack.Screen name="StudentList" component={StudentListScreen} />
             <Stack.Screen name="Attendance" component={AttendanceScreen} />
+            <Stack.Screen name="AdminLogin" component={AdminLoginScreen} />
+            <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} />
+            <Stack.Screen name="UserBreakdown" component={UserBreakdownScreen} />
+            <Stack.Screen name="UserTracking" component={UserTrackingScreen} />
           </>
         )}
       </Stack.Navigator>
